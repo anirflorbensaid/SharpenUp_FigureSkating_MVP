@@ -5,3 +5,5 @@ opencv-python
 mediapipe
 torch
 torchvision
+scikit-learn
+joblib
