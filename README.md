@@ -1,7 +1,9 @@
-# SharpenUp_FigureSkating_MVP
+# SharpenUp
 
 Minimal prototype for detecting figure skating elements from video using pose
 estimation and classical ML models.
+
+---
 
 ## Pipeline Overview
 
