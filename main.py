@@ -1,10 +1,10 @@
 import os
+import sys
 import cv2
 import numpy as np
 import mediapipe as mp
 
 # === CONFIGURATION ===
-VIDEO_PATH = "data/videos/sample_skater.mp4"
 OUT_DIR = "keypoints"
 
 # Initialize Mediapipe Pose model
@@ -18,7 +18,7 @@ def extract_keypoints(video_path, out_dir):
     # Open video file
     cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
-        raise RuntimeError(f"Could not open video: {video_path}")
+        raise RuntimeError(f"❌ Could not open video: {video_path}")
 
     pose = mp_pose.Pose(
         static_image_mode=False,
@@ -55,12 +55,23 @@ def extract_keypoints(video_path, out_dir):
     keypoints = np.array(keypoints)
     np.save(out_path, keypoints)
 
-    print("\n=== DONE ===")
-    print(f"Video:       {video_path}")
-    print(f"Frames read: {frames}")
-    print(f"Frames kept: {kept}")
-    print(f"Saved to:    {out_path}")
-    print(f"Array shape: {keypoints.shape}\n")
+    print("\n✅ DONE")
+    print(f"🎥 Video:       {video_path}")
+    print(f"🧩 Frames read: {frames}")
+    print(f"📈 Frames kept: {kept}")
+    print(f"💾 Saved to:    {out_path}")
+    print(f"📊 Array shape: {keypoints.shape}\n")
+
 
 if __name__ == "__main__":
+    # Use: python3 main.py --input <path_to_video>
+    if len(sys.argv) < 3 or sys.argv[1] != "--input":
+        print("Usage: python3 main.py --input <path_to_video>")
+        sys.exit(1)
+
+    VIDEO_PATH = sys.argv[2]
+
+    if not os.path.exists(VIDEO_PATH):
+        raise FileNotFoundError(f"❌ Video not found: {VIDEO_PATH}")
+
     extract_keypoints(VIDEO_PATH, OUT_DIR)
